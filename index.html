@@ -53,7 +53,6 @@
                     <option>اللهم صل وسلم وبارك على نبينا محمد</option>
                     <option>أستغفر الله العظيم الذي لا إله إلا هو الحي القيوم وأتوب إليه</option>
                     <option>أستغفر الله وأتوب إليه</option>
-                    <option>اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك علي، وأبوء بذنبي فاغفر لي، فإنه لا يغفر الذنوب إلا أنت</option>
                     <option>رضيت بالله رباً، وبالإسلام ديناً، وبمحمد صلى الله عليه وسلم نبياً ورسولاً</option>
                     <option>يا حي يا قيوم برحمتك أستغيث، أصلح لي شأني كله ولا تكلني إلى نفسي طرفة عين</option>
                 </select>
@@ -123,46 +122,124 @@
     </div>
 
     <div class="modal-overlay" id="modal-azkar">
-        <div class="modal-content">
+        <div class="modal-content azkar-modal-content">
             <button class="close-btn" onclick="closeModal('modal-azkar')"><i class="fas fa-times"></i></button>
-            <h2 class="modal-title">أذكار الصباح والمساء والسنن</h2>
+            <h2 class="modal-title">أذكار وسنن</h2>
             
-            <div class="azkar-section">
-                <h4>أولاً: أذكار الصباح والمساء</h4>
-                <p style="font-size:0.9rem; color:#666; margin-bottom:10px;">(ملاحظة: في الصباح نقول "أصبحنا" وفي المساء نقول "أمسينا")</p>
-                
-                <div class="zekr-item"><strong>آية الكرسي:</strong> (اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...) - [مرة واحدة]</div>
-                <div class="zekr-item"><strong>المعوذات:</strong> (الإخلاص، الفلق، الناس) - [3 مرات]</div>
-                <div class="zekr-item"><strong>سيد الاستغفار:</strong> "اللَّهُمَّ أَنْتَ رَبِّي لا إِلَهَ إِلا أَنْتَ..." - [مرة واحدة]</div>
-                <div class="zekr-item"><strong>الدعاء بالحفظ:</strong> "بِسْمِ اللَّهِ الَّذِي لا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ..." - [3 مرات]</div>
-                <div class="zekr-item"><strong>الرضا بالله:</strong> "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالإِسْلامِ دِينًا..." - [3 مرات]</div>
-                <div class="zekr-item"><strong>طلب الرحمة:</strong> "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ..." - [مرة واحدة]</div>
-                <div class="zekr-item"><strong>التوكل:</strong> "حَسْبِيَ اللَّهُ لا إِلَهَ إِلا هُوَ عَلَيْهِ تَوَكَّلْتُ..." - [7 مرات]</div>
-                <div class="zekr-item"><strong>الذكر العام:</strong> "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ" - [100 مرة]</div>
-                <div class="zekr-item"><strong>دعاء الوقت:</strong> في الصباح: "اللَّهُمَّ بِكَ أَصْبَحْنَا..." وفي المساء: "اللَّهُمَّ بِكَ أَمْسَيْنَا..."</div>
+            <div class="tabs-container">
+                <button class="tab-btn morning-btn active-tab" onclick="showTab('morning')">
+                    <i class="fas fa-sun"></i> أذكار الصباح
+                </button>
+                <button class="tab-btn evening-btn" onclick="showTab('evening')">
+                    <i class="fas fa-moon"></i> أذكار المساء
+                </button>
+                <button class="tab-btn ramadan-btn" onclick="showTab('ramadan')">
+                    <i class="fas fa-star-and-crescent"></i> سنن رمضان
+                </button>
             </div>
 
-            <div class="azkar-section">
-                <h4>ثانياً: أهم السنن النبوية (تحديات يومية)</h4>
-                
-                <strong style="color:var(--dark-gold);">1. سنن متعلقة بالصلاة:</strong>
-                <label class="sunnah-item"><input type="checkbox"> السنن الرواتب (12 ركعة يومياً)</label>
-                <label class="sunnah-item"><input type="checkbox"> صلاة الضحى</label>
-                <label class="sunnah-item"><input type="checkbox"> الدعاء بين الأذان والإقامة</label>
-                <label class="sunnah-item"><input type="checkbox"> سنة الوضوء (ركعتين)</label>
-
-                <strong style="color:var(--dark-gold); display:block; margin-top:15px;">2. سنن متعلقة بالحياة اليومية:</strong>
-                <label class="sunnah-item"><input type="checkbox"> السواك</label>
-                <label class="sunnah-item"><input type="checkbox"> التيامن (البدء باليمين)</label>
-                <label class="sunnah-item"><input type="checkbox"> إفشاء السلام والتبسم</label>
-                <label class="sunnah-item"><input type="checkbox"> أذكار الدخول والخروج</label>
-
-                <strong style="color:var(--dark-gold); display:block; margin-top:15px;">3. سنن متعلقة بالليل والنوم:</strong>
-                <label class="sunnah-item"><input type="checkbox"> الوضوء قبل النوم</label>
-                <label class="sunnah-item"><input type="checkbox"> قراءة سورة الملك</label>
-                <label class="sunnah-item"><input type="checkbox"> الوتر قبل النوم</label>
-                <label class="sunnah-item"><input type="checkbox"> نفض الفراش 3 مرات والتسمية</label>
+            <div id="tab-morning" class="tab-content active-content">
+                <div class="tab-header" style="color: #e67e22;">
+                    <h3><i class="fas fa-sun"></i> أذكار الصباح المستحبة</h3>
+                    <p>ابدأ يومك بذكر الله والتوكل عليه</p>
+                </div>
+                <div class="checklist-container">
+                    <label class="check-item"><input type="checkbox"><span>(أَصبَحْنا على فِطرةِ الإسلامِ، وعلى كَلِمةِ الإخلاصِ، وعلى دِينِ نَبيِّنا محمَّدٍ صلَّى اللهُ عليه وسلَّمَ، وعلى مِلَّةِ أبِينا إبراهيمَ، حَنيفًا مُسلِمًا، وما كان مِنَ المُشرِكينَ).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(بسمِ اللهِ الذي لا يَضرُ مع اسمِه شيءٌ في الأرضِ ولا في السماءِ وهو السميعُ العليمِ) <strong>[3 مرات]</strong>.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(سبحانَ اللَّهِ وبحمدِه لا قوَّةَ إلَّا باللَّهِ / ما شاءَ اللَّهُ كانَ وما لم يشأ لم يَكن / أعلمُ أنَّ اللَّهَ على كلِّ شيءٍ قديرٌ وأنَّ اللَّهَ قد أحاطَ بِكلِّ شيءٍ علمًا).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(سبحانَ اللَّهِ وبحمدِهِ) <strong>[100 مرَّة]</strong>.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(اللَّهمَّ بِكَ أصبَحنا، وبِكَ أمسَينا، وبِكَ نحيا وبِكَ نموتُ وإليكَ النُّشورُ).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(رَضيتُ باللَّهِ ربًّا، وبالإسلامِ دينًا، وبِمُحمَّدٍ رسولًا).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(اللَّهمَّ عالِمَ الغَيبِ والشَّهادةِ، فاطرَ السَّمواتِ والأرضِ، رَبَّ كلِّ شيءٍ ومَليكَهُ، أشهدُ أن لا إلَهَ إلَّا أنتَ، أعوذُ بِكَ مِن شرِّ نفسي وشرِّ الشَّيطانِ وشِركِهِ).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(اللَّهمَّ ما أصبحَ بي من نعمةٍ أو بأحدٍ من خلقِكَ فمنكَ وحدَكَ لا شريكَ لكَ فلكَ الحمدُ ولكَ الشُّكرُ).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(سُبْحَانَ اللهِ وَبِحَمْدِهِ، عَدَدَ خَلْقِهِ وَرِضَا نَفْسِهِ وَزِنَةَ عَرْشِهِ وَمِدَادَ كَلِمَاتِهِ) <strong>[3 مرات]</strong>.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(حَسبيَ اللهُ لا إلهَ إلَّا هو، عليه تَوكَّلْتُ، وهو ربُّ العَرشِ العَظيمِ) <strong>[7 مرات]</strong>.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(اللَّهُمَّ إنِّي أصبَحتُ أُشهِدُك، وأُشهِدُ حَمَلةَ عَرشِكَ، ومَلائِكَتَك، وجميعَ خَلقِكَ: أنَّكَ أنتَ اللهُ لا إلهَ إلَّا أنتَ، وأنَّ مُحمَّدًا عبدُكَ ورسولُكَ).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(أَصْـبَحْنا وَأَصْـبَحَ المُـلْكُ لله وَالحَمدُ لله، لا إلهَ إلاّ اللّهُ وَحدَهُ لا شَريكَ لهُ، لهُ المُـلكُ ولهُ الحَمْـد، وهُوَ على كلّ شَيءٍ قدير...).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>الصلاة على النبي: (اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ على نَبِيِّنَا مُحمَّد) <strong>[10 مرات]</strong>.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(أستغفرُ اللهَ العظيمَ الذي لا إلهَ إلَّا هو الحيَّ القيومَ وأتوبُ إليه).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(لا إلهَ إلَّا اللهُ وحدَه لا شريكَ له له الملكُ وله الحمدُ وهو على كلِّ شيءٍ قديرٌ).</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>سيد الاستغفار:</strong> (اللَّهُمَّ أنْتَ رَبِّي لا إلَهَ إلَّا أنْتَ، خَلَقْتَنِي وأنا عَبْدُكَ، وأنا علَى عَهْدِكَ ووَعْدِكَ ما اسْتَطَعْتُ...).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(اللهمَّ إني أسألُك العفوَ والعافيةَ، في الدنيا والآخرةِ...).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(اللهمَّ إنِّي أعوذُ بك من الهمِّ والحزنِ، والعجزِ والكسلِ، والبُخلِ والجُبنِ، وضَلَعِ الدَّينِ، وغَلَبَةِ الرجالِ).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(يا حيُّ يا قيُّومُ، برَحمتِكَ أستَغيثُ، أصلِح لي شأني كُلَّهُ، ولا تَكِلني إلى نَفسي طرفةَ عينٍ).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(اللَّهمَّ عافِني في بدَني اللَّهمَّ عافِني في سمعي اللَّهمَّ عافِني في بصري لا إلهَ إلَّا أنت) <strong>[3 مرات]</strong>.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(اللَّهمَّ إنِّي أسألُكَ عِلمًا نافعًا ورزقًا طيِّبًا وعملًا متقبَّلًا).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(أعوذُ بكلماتِ اللهِ التَّامَّاتِ مِن شرِّ ما خلَق) <strong>[3 مرات]</strong>.</span></label>
+                    
+                    <h4 style="margin-top: 15px; color:#e67e22;">الآيات القرآنية المستحبة:</h4>
+                    <label class="check-item"><input type="checkbox"><span><strong>آية الكرسي:</strong> (اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...).</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>سورة الإخلاص والمعوذتين:</strong> (الإخلاص، الفلق، الناس) <strong>[3 مرات]</strong>.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(رَبِّ أَعُوذُ بِكَ مِنْ هَمَزَاتِ الشَّيَاطِينِ وَأَعُوذُ بِكَ رَبِّ أَنْ يَحْضُرُونِ).</span></label>
+                </div>
             </div>
+
+            <div id="tab-evening" class="tab-content">
+                <div class="tab-header" style="color: #2c3e50;">
+                    <h3><i class="fas fa-moon"></i> أذكار المساء المستحبة</h3>
+                    <p>اختم يومك بحفظ الله ورعايته</p>
+                </div>
+                <div class="checklist-container">
+                    <label class="check-item"><input type="checkbox"><span>(أمسَيْنا على فِطرةِ الإسلامِ وعلى كَلِمةِ الإخلاصِ وعلى دينِ نبيِّنا محمَّدٍ صلَّى اللهُ عليه وسلَّم...).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(بسمِ اللهِ الذي لا يَضرُ مع اسمِه شيءٌ في الأرضِ ولا في السماءِ وهو السميعُ العليمِ) <strong>[3 مرات]</strong>.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(رَضِيتُ بِاللهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ نَبِيًّا).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(اللَّهمَّ بِكَ أمسَينا وبِكَ أصبَحنا وبِكَ نحيا وبِكَ نموتُ وإليكَ المصير).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(سبحانَ اللَّهِ وبحمدِهِ) <strong>[100 مرَّة]</strong>.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(سُبْحَانَ اللهِ وَبِحَمْدِهِ، عَدَدَ خَلْقِهِ وَرِضَا نَفْسِهِ وَزِنَةَ عَرْشِهِ وَمِدَادَ كَلِمَاتِهِ) <strong>[3 مرات]</strong>.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(اللَّهُمَّ إنِّي أمسيت أُشهِدُك، وأُشهِدُ حَمَلةَ عَرشِكَ، ومَلائِكَتَك، وجميعَ خَلقِكَ...).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>الصلاة على النبي: (اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ على نَبِيِّنَا مُحمَّد) <strong>[10 مرات]</strong>.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(لا إلهَ إلَّا اللهُ وحدَه لا شريكَ له له الملكُ وله الحمدُ وهو على كلِّ شيءٍ قديرٌ).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(اللَّهمَّ ما أمسى بي مِن نعمةٍ أو بأحَدٍ مِن خَلْقِكَ، فمنكَ وحدَكَ لا شريكَ لكَ، فلَكَ الحمدُ ولكَ الشُّكرُ).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(أَمْسَيْنَا وَأَمْسَى المُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ لا إلَهَ إلَّا اللَّهُ، وَحْدَهُ لا شَرِيكَ له...).</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>سيد الاستغفار:</strong> (اللَّهُمَّ أنْتَ رَبِّي لا إلَهَ إلَّا أنْتَ، خَلَقْتَنِي وأنا عَبْدُكَ...).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(اللَّهمَّ إنِّي أسألُكَ خيرَ هذه الليلة فتحَها، ونصرَها، ونورَها، وبرَكتَها، وَهداها، وأعوذُ بِكَ من شرِّ ما فيها وشرِّ ما بعدَها).</span></label>
+                    <label class="check-item"><input type="checkbox"><span>(اللَّهمَّ عافِني في بدَني اللَّهمَّ عافِني في سمعي اللَّهمَّ عافِني في بصري لا إلهَ إلَّا أنت) <strong>[3 مرات]</strong>.</span></label>
+                    
+                    <h4 style="margin-top: 15px; color:#2c3e50;">الآيات القرآنية المستحبة:</h4>
+                    <label class="check-item"><input type="checkbox"><span><strong>خواتيم سورة البقرة:</strong> (آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ...).</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>آية الكرسي.</strong></span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>سورة الإخلاص والمعوذتين</strong> <strong>[3 مرات]</strong>.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>قراءة <strong>سورة الدخان</strong> و <strong>سورة الواقعة</strong>.</span></label>
+                </div>
+            </div>
+
+            <div id="tab-ramadan" class="tab-content">
+                <div class="tab-header" style="color: #8e44ad;">
+                    <h3><i class="fas fa-star-and-crescent"></i> السنن النبوية المستحبة</h3>
+                    <p style="font-size:0.9rem; line-height:1.6; margin-bottom:15px; color:#555;">
+                        السنة النبوية هي كل ما ورد عن النبي ﷺ من أقوال أو أفعال. اتباعها يضمن للمسلم حياة متزنة ومليئة بالبركة. وفي رمضان، كان للنبي ﷺ سنن خاصة تميز عباداته.
+                    </p>
+                </div>
+                <div class="checklist-container">
+                    <h4 style="color:#8e44ad; margin-bottom:10px;">سنن الرسول في حياته اليومية:</h4>
+                    <label class="check-item"><input type="checkbox"><span>المحافظة على الأذكار صباحًا ومساءً.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>الالتزام بقراءة القرآن والتدبر فيه.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>السواك، خاصة قبل الصلاة.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>التبسم والتعامل برفق مع الناس.</span></label>
+                    <label class="check-item"><input type="checkbox"><span>الوضوء قبل النوم وقراءة الأذكار.</span></label>
+
+                    <h4 style="color:#8e44ad; margin-top:15px; margin-bottom:10px;">سنن الرسول في رمضان والصيام:</h4>
+                    <label class="check-item"><input type="checkbox"><span><strong>تعجيل الفطور وتأخير السحور:</strong> لقوله ﷺ: "لا يزال الناس بخير ما عجّلوا الفطر وأخروا السحور".</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>الإفطار على تمر وماء:</strong> البدء بالرطبات، ثم التمر، ثم الماء.</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>الدعاء عند الإفطار:</strong> "ذهب الظمأ، وابتلت العروق، وثبت الأجر إن شاء الله".</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>السحور:</strong> لقوله ﷺ: "تسحروا فإن في السحور بركة".</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>الإكثار من الصلاة والقيام (التراويح):</strong> "من قام رمضان إيمانًا واحتسابًا غُفر له ما تقدم من ذنبه".</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>الإكثار من قراءة القرآن:</strong> ومراجعته وتدبره.</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>كثرة الصدقات والإحسان:</strong> كان ﷺ أجود بالخير من الريح المرسلة في رمضان.</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>السواك وتنظيف الفم أثناء الصيام:</strong> للحفاظ على الطهارة.</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>الابتعاد عن الغضب والجدال:</strong> "فإن سابه أحد أو قاتله، فليقل: إني صائم".</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>كثرة الذكر والاستغفار:</strong> لأن الصائم في عبادة طوال يومه.</span></label>
+
+                    <h4 style="color:#8e44ad; margin-top:15px; margin-bottom:10px;">سنن ليلة القدر والعشر الأواخر:</h4>
+                    <label class="check-item"><input type="checkbox"><span><strong>الاعتكاف:</strong> التفرغ للعبادة في المسجد.</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>الإكثار من الدعاء:</strong> "اللهم إنك عفو تحب العفو فاعف عني".</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>قيام الليل والتهجد:</strong> وإيقاظ الأهل للمشاركة في العبادة.</span></label>
+                    <label class="check-item"><input type="checkbox"><span><strong>التصدق:</strong> الإكثار من الصدقات والأعمال الصالحة.</span></label>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
         </div>
     </div>

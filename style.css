@@ -76,12 +76,24 @@ header p {
 .card:nth-child(3) { animation-delay: 0.3s; }
 .card:nth-child(4) { animation-delay: 0.4s; }
 
+/* --- إصلاح أنيميشن الكرت (من الأسفل للأعلى) --- */
 .card::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 5px;
+    bottom: 0; /* يبدأ من الأسفل */
+    left: 0; 
+    width: 100%; 
+    height: 5px; /* الارتفاع المبدئي كشريط سفلي */
     background: var(--primary-gold);
-    transition: height 0.3s;
+    /* التأكد من أن الانتقال سلس للارتفاع والشفافية */
+    transition: height 0.4s ease, opacity 0.4s ease;
+    z-index: 0; /* خلف المحتوى */
+}
+
+/* لضمان أن الأيقونة والنص يظهران فوق الخلفية الذهبية عند التمدد */
+.card i, .card h3 {
+    position: relative;
+    z-index: 1;
 }
 
 .card:hover {
@@ -90,7 +102,10 @@ header p {
     box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
 }
 
-.card:hover::before { height: 100%; opacity: 0.05; }
+.card:hover::before { 
+    height: 100%; /* يتمدد ليغطي الكامل */
+    opacity: 0.1; /* شفافية خفيفة */
+}
 
 .card i {
     font-size: 3.5rem;
@@ -113,12 +128,13 @@ header p {
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(5px);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* توسيط أفقي */
+    align-items: center; /* توسيط رأسي */
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
     transition: all 0.4s ease;
+    padding: 20px; /* هام جداً للموبايل لمنع الالتصاق بالحواف */
 }
 
 .modal-overlay.active {
@@ -126,23 +142,30 @@ header p {
     visibility: visible;
 }
 
+/* --- إصلاح النافذة المنبثقة المكسورة --- */
 .modal-content {
     background: var(--white);
-    width: 90%;
-    max-width: 600px;
+    width: 100%; /* يأخذ العرض المتاح داخل الـ padding */
+    max-width: 600px; /* أقصى عرض */
+    margin: 0 auto; /* ضمان التوسط */
     border-radius: 20px;
     padding: 30px;
     position: relative;
-    transform: scale(0.8) translateY(50px);
+    
+    /* إعدادات الأنيميشن */
+    transform: translateY(50px); /* يبدأ منزاحاً للأسفل قليلاً */
+    opacity: 0; /* يبدأ مختفياً تماماً */
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    max-height: 90vh;
-    overflow-y: auto;
+    
+    max-height: 85vh; /* أقصى ارتفاع مناسب للشاشات */
+    overflow-y: auto; /* تفعيل السكرول الداخلي إذا طال المحتوى */
     border: 2px solid var(--primary-gold);
     box-shadow: 0 20px 50px rgba(0,0,0,0.2);
 }
 
 .modal-overlay.active .modal-content {
-    transform: scale(1) translateY(0);
+    transform: translateY(0); /* يعود لمكانه الأصلي */
+    opacity: 1; /* يظهر بالكامل */
 }
 
 .close-btn {
@@ -150,7 +173,7 @@ header p {
     top: 15px; left: 15px;
     background: none; border: none;
     font-size: 1.5rem; color: #888;
-    cursor: pointer; transition: color 0.3s;
+    cursor: pointer; transition: color 0.3s; z-index: 10;
 }
 .close-btn:hover { color: red; }
 
@@ -252,4 +275,130 @@ footer a { color: var(--primary-gold); text-decoration: none; }
 @keyframes fall {
     0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
     100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+/* --- تنسيقات أزرار الأذكار والسنن (الجديدة) --- */
+.azkar-modal-content {
+    max-width: 750px; /* تكبير النافذة قليلاً لتستوعب المحتوى المريح */
+}
+
+.tabs-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+}
+
+.tab-btn {
+    flex: 1;
+    min-width: 140px;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0.6; /* شفافية للأزرار الغير مفعلة */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.tab-btn:hover {
+    transform: translateY(-3px);
+    opacity: 0.8;
+}
+
+/* الألوان الخاصة بكل زر */
+.morning-btn { background: linear-gradient(135deg, #f39c12, #e67e22); }
+.evening-btn { background: linear-gradient(135deg, #2c3e50, #34495e); }
+.ramadan-btn { background: linear-gradient(135deg, #8e44ad, #9b59b6); }
+
+/* الزر المفعل */
+.tab-btn.active-tab {
+    opacity: 1;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    border: 2px solid var(--white);
+}
+
+/* محتوى الأقسام */
+.tab-content {
+    display: none; /* إخفاء الكل افتراضياً */
+    animation: fadeIn 0.5s ease;
+    text-align: right;
+}
+
+.tab-content.active-content {
+    display: block; /* إظهار القسم المفعل */
+}
+
+.tab-header {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 2px dashed #eee;
+    padding-bottom: 10px;
+}
+
+.tab-header h3 {
+    font-size: 1.6rem;
+    margin-bottom: 5px;
+}
+
+.checklist-container {
+    max-height: 50vh; /* شريط تمرير داخلي إذا طالت القائمة */
+    overflow-y: auto;
+    padding-left: 10px;
+}
+
+/* تنسيق التشيك ليست (المهام) */
+.check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    background: #fdfbf7;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #eaeaea;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+.check-item:hover {
+    border-color: var(--primary-gold);
+    box-shadow: 0 4px 10px rgba(212, 175, 55, 0.1);
+    transform: translateX(-5px); /* حركة خفيفة لليمين عند التأشير */
+}
+
+.check-item input[type="checkbox"] {
+    margin-top: 6px;
+    width: 22px;
+    height: 22px;
+    accent-color: var(--primary-gold);
+    cursor: pointer;
+    flex-shrink: 0; /* منع المربع من الانكماش */
+}
+
+/* تصغير مساحة التمرير (Scrollbar) بشكل جميل */
+.checklist-container::-webkit-scrollbar { width: 8px; }
+.checklist-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+.checklist-container::-webkit-scrollbar-thumb { background: var(--primary-gold); border-radius: 10px; }
+
+/* Media Queries لتحسين التجاوب على الموبايل */
+@media (max-width: 768px) {
+    header { padding: 30px 15px; }
+    header h1 { font-size: 2.2rem; }
+    header p { font-size: 1rem; }
+    .container { margin: 30px auto; grid-template-columns: 1fr; }
+    .card { padding: 25px 15px; }
+    .card i { font-size: 3rem; }
+    .card h3 { font-size: 1.3rem; }
+    .modal-content { padding: 20px; max-height: 80vh; }
+    .counter-btn { width: 150px; height: 150px; font-size: 2.5rem; }
 }

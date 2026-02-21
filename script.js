@@ -140,3 +140,21 @@ function createStars() {
         setTimeout(() => { star.remove(); }, 4000);
     }
 }
+// --- وظيفة التبديل بين أزرار الأذكار والسنن ---
+function showTab(tabName) {
+    // إخفاء كل المحتويات
+    let contents = document.querySelectorAll('.tab-content');
+    contents.forEach(content => {
+        content.classList.remove('active-content');
+    });
+
+    // إزالة تفعيل كل الأزرار
+    let buttons = document.querySelectorAll('.tab-btn');
+    buttons.forEach(btn => {
+        btn.classList.remove('active-tab');
+    });
+
+    // إظهار المحتوى المطلوب وتفعيل زره
+    document.getElementById('tab-' + tabName).classList.add('active-content');
+    document.querySelector('.' + tabName + '-btn').classList.add('active-tab');
+}
