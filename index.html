@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليلك الرمضاني</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1><i class="fas fa-moon"></i> دليلك الرمضاني</h1>
+        <p>رفيقك في شهر الطاعات والعبادات</p>
+    </header>
+
+    <div class="container">
+        <div class="card" onclick="openModal('modal-tasbeeh')">
+            <i class="fas fa-hand-holding-heart"></i>
+            <h3>عداد التسبيح والأذكار</h3>
+        </div>
+
+        <div class="card" onclick="openModal('modal-series')">
+            <i class="fas fa-tv"></i>
+            <h3>أهم السلاسل الدينية</h3>
+        </div>
+
+        <div class="card" onclick="openModal('modal-quiz')">
+            <i class="fas fa-clipboard-list"></i>
+            <h3>التذكير والتقييم</h3>
+        </div>
+
+        <div class="card" onclick="openModal('modal-azkar')">
+            <i class="fas fa-book-open"></i>
+            <h3>أذكار الصباح والمساء والسنن</h3>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-tasbeeh">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-tasbeeh')"><i class="fas fa-times"></i></button>
+            <h2 class="modal-title">عداد التسبيح</h2>
+            <div class="tasbeeh-container">
+                <select id="zekr-select" onchange="resetCounter()">
+                    <option>سبحان الله</option>
+                    <option>الحمد لله</option>
+                    <option>الله أكبر</option>
+                    <option>لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير</option>
+                    <option>سبحان الله وبحمده، سبحان الله العظيم</option>
+                    <option>لا حول ولا قوة إلا بالله</option>
+                    <option>حسبي الله ونعم الوكيل</option>
+                    <option>اللهم صل وسلم وبارك على نبينا محمد</option>
+                    <option>أستغفر الله العظيم الذي لا إله إلا هو الحي القيوم وأتوب إليه</option>
+                    <option>أستغفر الله وأتوب إليه</option>
+                    <option>اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك علي، وأبوء بذنبي فاغفر لي، فإنه لا يغفر الذنوب إلا أنت</option>
+                    <option>رضيت بالله رباً، وبالإسلام ديناً، وبمحمد صلى الله عليه وسلم نبياً ورسولاً</option>
+                    <option>يا حي يا قيوم برحمتك أستغيث، أصلح لي شأني كله ولا تكلني إلى نفسي طرفة عين</option>
+                </select>
+                
+                <input type="text" id="custom-zekr" placeholder="أو اكتب ذكراً جديداً هنا...">
+                <button class="add-zikr-btn" onclick="addCustomZekr()">إضافة ذكر</button>
+
+                <button class="counter-btn" id="counter-btn" onclick="incrementCounter()">0</button>
+                <br>
+                <button class="reset-btn" onclick="resetCounter()">تصفير العداد <i class="fas fa-undo"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-series">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-series')"><i class="fas fa-times"></i></button>
+            <h2 class="modal-title">أهم السلاسل الدينية</h2>
+            
+            <div class="warning-banner">
+                <i class="fas fa-lightbulb"></i> تنويه: رمضان شهر عبادة، حاول أن تأخذ ما يفيدك من الفيديوهات مع الحرص على عدم إضاعة الوقت واستثماره في العبادة.
+            </div>
+
+            <a href="https://www.youtube.com/watch?v=1HSxd7lz2ZY" target="_blank" class="series-link">
+                <span>1- رمضان مريح نفسياً (لكريم عفيفي)</span>
+                <i class="fas fa-play-circle" style="color:var(--primary-gold)"></i>
+            </a>
+            <a href="http://bit.ly/4auMwHa" target="_blank" class="series-link">
+                <span>2- برنامج على المغرب 3</span>
+                <i class="fas fa-play-circle" style="color:var(--primary-gold)"></i>
+            </a>
+            <a href="https://www.youtube.com/@mohelghaleez" target="_blank" class="series-link">
+                <span>3- كل يوم آية (محمد الغليظ)</span>
+                <i class="fas fa-play-circle" style="color:var(--primary-gold)"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-quiz">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-quiz')"><i class="fas fa-times"></i></button>
+            <h2 class="modal-title">التذكير والتقييم</h2>
+            
+            <div class="quiz-intro active" id="quiz-intro">
+                <p style="font-size: 1.2rem; line-height: 1.8;">التذكير والتقييم هو اختبار وأسئلة هدفها تذكرة المسلم بالأعمال التي قد تنساها في رمضان. والاختبار هدفه تذكيرك بها، فرمضان شهر يستحق فيه بذل أقصى الجهد في العبادات.</p>
+                <button class="btn-start" onclick="startQuiz()">ابدأ التذكرة</button>
+            </div>
+
+            <div class="quiz-question" id="quiz-question">
+                <p style="color:#888" id="q-counter">سؤال 1 من 12</p>
+                <div class="question-text" id="q-text">الصلوات الخمس في وقتها؟</div>
+                <button class="ans-btn" onclick="answerQuiz(true)">نعم <i class="fas fa-check"></i></button>
+                <button class="ans-btn" onclick="answerQuiz(false)">لا <i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="quiz-result" id="quiz-result">
+                <h3>نتيجتك اليومية</h3>
+                <div id="result-box" class="result-box"></div>
+                <div style="margin-top: 20px; text-align: right;" id="missed-items-container">
+                    <h4 style="color:var(--primary-gold); margin-bottom: 10px;">أعمال تذكرها غداً:</h4>
+                    <ul id="missed-items" style="list-style-type: none; padding: 0; line-height: 1.6;"></ul>
+                </div>
+                <button class="btn-start" onclick="resetQuiz()">إعادة التقييم</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-azkar">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-azkar')"><i class="fas fa-times"></i></button>
+            <h2 class="modal-title">أذكار الصباح والمساء والسنن</h2>
+            
+            <div class="azkar-section">
+                <h4>أولاً: أذكار الصباح والمساء</h4>
+                <p style="font-size:0.9rem; color:#666; margin-bottom:10px;">(ملاحظة: في الصباح نقول "أصبحنا" وفي المساء نقول "أمسينا")</p>
+                
+                <div class="zekr-item"><strong>آية الكرسي:</strong> (اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...) - [مرة واحدة]</div>
+                <div class="zekr-item"><strong>المعوذات:</strong> (الإخلاص، الفلق، الناس) - [3 مرات]</div>
+                <div class="zekr-item"><strong>سيد الاستغفار:</strong> "اللَّهُمَّ أَنْتَ رَبِّي لا إِلَهَ إِلا أَنْتَ..." - [مرة واحدة]</div>
+                <div class="zekr-item"><strong>الدعاء بالحفظ:</strong> "بِسْمِ اللَّهِ الَّذِي لا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ..." - [3 مرات]</div>
+                <div class="zekr-item"><strong>الرضا بالله:</strong> "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالإِسْلامِ دِينًا..." - [3 مرات]</div>
+                <div class="zekr-item"><strong>طلب الرحمة:</strong> "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ..." - [مرة واحدة]</div>
+                <div class="zekr-item"><strong>التوكل:</strong> "حَسْبِيَ اللَّهُ لا إِلَهَ إِلا هُوَ عَلَيْهِ تَوَكَّلْتُ..." - [7 مرات]</div>
+                <div class="zekr-item"><strong>الذكر العام:</strong> "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ" - [100 مرة]</div>
+                <div class="zekr-item"><strong>دعاء الوقت:</strong> في الصباح: "اللَّهُمَّ بِكَ أَصْبَحْنَا..." وفي المساء: "اللَّهُمَّ بِكَ أَمْسَيْنَا..."</div>
+            </div>
+
+            <div class="azkar-section">
+                <h4>ثانياً: أهم السنن النبوية (تحديات يومية)</h4>
+                
+                <strong style="color:var(--dark-gold);">1. سنن متعلقة بالصلاة:</strong>
+                <label class="sunnah-item"><input type="checkbox"> السنن الرواتب (12 ركعة يومياً)</label>
+                <label class="sunnah-item"><input type="checkbox"> صلاة الضحى</label>
+                <label class="sunnah-item"><input type="checkbox"> الدعاء بين الأذان والإقامة</label>
+                <label class="sunnah-item"><input type="checkbox"> سنة الوضوء (ركعتين)</label>
+
+                <strong style="color:var(--dark-gold); display:block; margin-top:15px;">2. سنن متعلقة بالحياة اليومية:</strong>
+                <label class="sunnah-item"><input type="checkbox"> السواك</label>
+                <label class="sunnah-item"><input type="checkbox"> التيامن (البدء باليمين)</label>
+                <label class="sunnah-item"><input type="checkbox"> إفشاء السلام والتبسم</label>
+                <label class="sunnah-item"><input type="checkbox"> أذكار الدخول والخروج</label>
+
+                <strong style="color:var(--dark-gold); display:block; margin-top:15px;">3. سنن متعلقة بالليل والنوم:</strong>
+                <label class="sunnah-item"><input type="checkbox"> الوضوء قبل النوم</label>
+                <label class="sunnah-item"><input type="checkbox"> قراءة سورة الملك</label>
+                <label class="sunnah-item"><input type="checkbox"> الوتر قبل النوم</label>
+                <label class="sunnah-item"><input type="checkbox"> نفض الفراش 3 مرات والتسمية</label>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>العمل ده خالص لله فقط ودعواتكم بالتوفيق ❤️</p>
+        <p>لو حابب تزود حاجة فالموقع أو عندك أي اقتراحات ابعتلنا على الإيميل ده:</p>
+        <a href="mailto:Lo2tare@gmail.com"><i class="fas fa-envelope"></i> Lo2tare@gmail.com</a>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

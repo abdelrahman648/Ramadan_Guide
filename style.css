@@ -1,0 +1,255 @@
+:root {
+    --primary-gold: #D4AF37;
+    --light-gold: #F9F1DC;
+    --dark-gold: #AA8C2C;
+    --bg-white: #FCFBFA;
+    --text-dark: #333333;
+    --white: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Cairo', sans-serif;
+}
+
+body {
+    background-color: var(--bg-white);
+    color: var(--text-dark);
+    background-image: url('https://www.transparenttextures.com/patterns/arabesque.png');
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* الهيدر */
+header {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, var(--white), var(--light-gold));
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+    border-bottom: 3px solid var(--primary-gold);
+    animation: fadeInDown 1s ease;
+}
+
+header h1 {
+    color: var(--primary-gold);
+    font-size: 3rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+header p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* شبكة الكروت */
+.container {
+    flex: 1;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: var(--white);
+    border: 2px solid transparent;
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 1s ease both;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 5px;
+    background: var(--primary-gold);
+    transition: height 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-gold);
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+}
+
+.card:hover::before { height: 100%; opacity: 0.05; }
+
+.card i {
+    font-size: 3.5rem;
+    color: var(--primary-gold);
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+
+.card:hover i { transform: scale(1.1); }
+
+.card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* النوافذ المنبثقة (Modals) */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: var(--white);
+    width: 90%;
+    max-width: 600px;
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+    transform: scale(0.8) translateY(50px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 2px solid var(--primary-gold);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px; left: 15px;
+    background: none; border: none;
+    font-size: 1.5rem; color: #888;
+    cursor: pointer; transition: color 0.3s;
+}
+.close-btn:hover { color: red; }
+
+.modal-title {
+    text-align: center;
+    color: var(--primary-gold);
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+}
+
+/* تنسيقات التسبيح */
+.tasbeeh-container { text-align: center; }
+select, input[type="text"] {
+    width: 100%; padding: 12px; margin-bottom: 15px;
+    border: 1px solid #ddd; border-radius: 10px;
+    font-size: 1.1rem; outline: none;
+}
+select:focus, input:focus { border-color: var(--primary-gold); }
+.add-zikr-btn {
+    background: var(--dark-gold); color: white;
+    border: none; padding: 10px 20px; border-radius: 10px;
+    cursor: pointer; margin-bottom: 20px; width: 100%;
+    font-size: 1.1rem;
+}
+.counter-btn {
+    width: 180px; height: 180px;
+    border-radius: 50%; background: var(--primary-gold);
+    color: white; font-size: 3rem; font-weight: bold;
+    border: 8px solid var(--light-gold);
+    cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4);
+}
+.counter-btn:active { transform: scale(0.95); box-shadow: 0 5px 10px rgba(212, 175, 55, 0.4); }
+.reset-btn { margin-top: 15px; background: #eee; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+
+/* تنسيقات السلاسل */
+.warning-banner {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--dark-gold);
+    padding: 15px; border-radius: 10px;
+    text-align: center; font-weight: bold;
+    margin-bottom: 20px;
+    animation: pulse 2s infinite;
+    border: 1px solid var(--primary-gold);
+}
+.series-link {
+    display: block; background: var(--bg-white);
+    padding: 15px; margin-bottom: 15px;
+    border-radius: 10px; text-decoration: none; color: var(--text-dark);
+    border-right: 5px solid var(--primary-gold);
+    transition: all 0.3s;
+    display: flex; align-items: center; justify-content: space-between;
+}
+.series-link:hover { background: var(--light-gold); transform: translateX(-5px); }
+
+/* تنسيقات التقييم */
+.quiz-intro, .quiz-question, .quiz-result { display: none; text-align: center; }
+.quiz-intro.active, .quiz-question.active, .quiz-result.active { display: block; animation: fadeIn 0.5s ease; }
+.btn-start { background: var(--primary-gold); color: white; border: none; padding: 12px 30px; font-size: 1.2rem; border-radius: 30px; cursor: pointer; margin-top: 20px; }
+.question-text { font-size: 1.5rem; margin: 30px 0; min-height: 80px; }
+.ans-btn { background: var(--white); border: 2px solid var(--primary-gold); color: var(--primary-gold); padding: 10px 40px; font-size: 1.2rem; border-radius: 30px; cursor: pointer; margin: 0 10px; transition: 0.3s; }
+.ans-btn:hover { background: var(--primary-gold); color: white; }
+
+.result-box { padding: 30px; border-radius: 20px; margin-top: 20px; color: white; font-size: 1.3rem; line-height: 1.6; }
+.res-low { background: linear-gradient(135deg, #4da8da, #207ce5); }
+.res-mid { background: linear-gradient(135deg, #f1c40f, #e67e22); }
+.res-high { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+
+/* الأذكار والسنن */
+.azkar-section { margin-bottom: 20px; text-align: right;}
+.azkar-section h4 { color: var(--primary-gold); border-bottom: 2px solid var(--light-gold); padding-bottom: 5px; margin-bottom: 15px; }
+.zekr-item { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 10px; line-height: 1.6; }
+.sunnah-item { display: flex; align-items: center; margin-bottom: 10px; padding: 10px; background: #f9f9f9; border-radius: 8px;}
+.sunnah-item input { margin-left: 15px; width: 20px; height: 20px; accent-color: var(--primary-gold); }
+
+/* الفوتر */
+footer {
+    background: var(--text-dark); color: white;
+    text-align: center; padding: 30px 20px; margin-top: auto;
+}
+footer p { margin: 10px 0; font-size: 1.1rem; }
+footer a { color: var(--primary-gold); text-decoration: none; }
+
+/* أنيميشنز */
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pulse { 
+    0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); } 
+    70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); } 
+    100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); } 
+}
+
+/* نجوم التقييم العالي */
+.star-anim {
+    position: fixed; color: #f1c40f; font-size: 20px;
+    animation: fall 3s linear forwards; z-index: 2000; pointer-events: none;
+}
+@keyframes fall {
+    0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
