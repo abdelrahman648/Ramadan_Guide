@@ -1,0 +1,769 @@
+:root {
+    --primary-gold: #D4AF37;
+    --light-gold: #F9F1DC;
+    --dark-gold: #AA8C2C;
+    --bg-white: #FCFBFA;
+    --text-dark: #333333;
+    --white: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Cairo', sans-serif;
+}
+
+body {
+    background-color: var(--bg-white);
+    color: var(--text-dark);
+    background-image: url('https://www.transparenttextures.com/patterns/arabesque.png');
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* الهيدر */
+header {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, var(--white), var(--light-gold));
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+    border-bottom: 3px solid var(--primary-gold);
+    animation: fadeInDown 1s ease;
+}
+
+header h1 {
+    color: var(--primary-gold);
+    font-size: 3rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+header p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* شبكة الكروت */
+.container {
+    flex: 1;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: var(--white);
+    border: 2px solid transparent;
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 1s ease both;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+.card:nth-child(5) { animation-delay: 0.5s; }
+
+/* --- إصلاح أنيميشن الكرت (من الأسفل للأعلى) --- */
+.card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; /* يبدأ من الأسفل */
+    left: 0; 
+    width: 100%; 
+    height: 5px; /* الارتفاع المبدئي كشريط سفلي */
+    background: var(--primary-gold);
+    /* التأكد من أن الانتقال سلس للارتفاع والشفافية */
+    transition: height 0.4s ease, opacity 0.4s ease;
+    z-index: 0; /* خلف المحتوى */
+}
+
+/* لضمان أن الأيقونة والنص يظهران فوق الخلفية الذهبية عند التمدد */
+.card i, .card h3 {
+    position: relative;
+    z-index: 1;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-gold);
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+}
+
+.card:hover::before { 
+    height: 100%; /* يتمدد ليغطي الكامل */
+    opacity: 0.1; /* شفافية خفيفة */
+}
+
+.card i {
+    font-size: 3.5rem;
+    color: var(--primary-gold);
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+
+.card:hover i { transform: scale(1.1); }
+
+.card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* النوافذ المنبثقة (Modals) */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center; /* توسيط أفقي */
+    align-items: center; /* توسيط رأسي */
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    padding: 20px; /* هام جداً للموبايل لمنع الالتصاق بالحواف */
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- إصلاح النافذة المنبثقة المكسورة --- */
+.modal-content {
+    background: var(--white);
+    width: 100%; /* يأخذ العرض المتاح داخل الـ padding */
+    max-width: 600px; /* أقصى عرض */
+    margin: 0 auto; /* ضمان التوسط */
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+    
+    /* إعدادات الأنيميشن */
+    transform: translateY(50px); /* يبدأ منزاحاً للأسفل قليلاً */
+    opacity: 0; /* يبدأ مختفياً تماماً */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    max-height: 85vh; /* أقصى ارتفاع مناسب للشاشات */
+    overflow-y: auto; /* تفعيل السكرول الداخلي إذا طال المحتوى */
+    border: 2px solid var(--primary-gold);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0); /* يعود لمكانه الأصلي */
+    opacity: 1; /* يظهر بالكامل */
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px; left: 15px;
+    background: none; border: none;
+    font-size: 1.5rem; color: #888;
+    cursor: pointer; transition: color 0.3s; z-index: 10;
+}
+.close-btn:hover { color: red; }
+
+.modal-title {
+    text-align: center;
+    color: var(--primary-gold);
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+}
+
+/* تنسيقات التسبيح */
+.tasbeeh-container { text-align: center; }
+select, input[type="text"] {
+    width: 100%; padding: 12px; margin-bottom: 15px;
+    border: 1px solid #ddd; border-radius: 10px;
+    font-size: 1.1rem; outline: none;
+}
+select:focus, input:focus { border-color: var(--primary-gold); }
+.add-zikr-btn {
+    background: var(--dark-gold); color: white;
+    border: none; padding: 10px 20px; border-radius: 10px;
+    cursor: pointer; margin-bottom: 20px; width: 100%;
+    font-size: 1.1rem;
+}
+.counter-btn {
+    width: 180px; height: 180px;
+    border-radius: 50%; background: var(--primary-gold);
+    color: white; font-size: 3rem; font-weight: bold;
+    border: 8px solid var(--light-gold);
+    cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4);
+}
+.counter-btn:active { transform: scale(0.95); box-shadow: 0 5px 10px rgba(212, 175, 55, 0.4); }
+.reset-btn { margin-top: 15px; background: #eee; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+
+/* تنسيقات السلاسل */
+.warning-banner {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--dark-gold);
+    padding: 15px; border-radius: 10px;
+    text-align: center; font-weight: bold;
+    margin-bottom: 20px;
+    animation: pulse 2s infinite;
+    border: 1px solid var(--primary-gold);
+}
+.series-link {
+    display: block; background: var(--bg-white);
+    padding: 15px; margin-bottom: 15px;
+    border-radius: 10px; text-decoration: none; color: var(--text-dark);
+    border-right: 5px solid var(--primary-gold);
+    transition: all 0.3s;
+    display: flex; align-items: center; justify-content: space-between;
+}
+.series-link:hover { background: var(--light-gold); transform: translateX(-5px); }
+
+/* تنسيقات التقييم */
+.quiz-intro, .quiz-question, .quiz-result { display: none; text-align: center; }
+.quiz-intro.active, .quiz-question.active, .quiz-result.active { display: block; animation: fadeIn 0.5s ease; }
+.btn-start { background: var(--primary-gold); color: white; border: none; padding: 12px 30px; font-size: 1.2rem; border-radius: 30px; cursor: pointer; margin-top: 20px; }
+.question-text { font-size: 1.5rem; margin: 30px 0; min-height: 80px; }
+.ans-btn { background: var(--white); border: 2px solid var(--primary-gold); color: var(--primary-gold); padding: 10px 40px; font-size: 1.2rem; border-radius: 30px; cursor: pointer; margin: 0 10px; transition: 0.3s; }
+.ans-btn:hover { background: var(--primary-gold); color: white; }
+
+.result-box { padding: 30px; border-radius: 20px; margin-top: 20px; color: white; font-size: 1.3rem; line-height: 1.6; }
+.res-low { background: linear-gradient(135deg, #4da8da, #207ce5); }
+.res-mid { background: linear-gradient(135deg, #f1c40f, #e67e22); }
+.res-high { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+
+/* الأذكار والسنن */
+.azkar-section { margin-bottom: 20px; text-align: right;}
+.azkar-section h4 { color: var(--primary-gold); border-bottom: 2px solid var(--light-gold); padding-bottom: 5px; margin-bottom: 15px; }
+.zekr-item { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 10px; line-height: 1.6; }
+.sunnah-item { display: flex; align-items: center; margin-bottom: 10px; padding: 10px; background: #f9f9f9; border-radius: 8px;}
+.sunnah-item input { margin-left: 15px; width: 20px; height: 20px; accent-color: var(--primary-gold); }
+
+/* الفوتر */
+footer {
+    background: var(--text-dark); color: white;
+    text-align: center; padding: 30px 20px; margin-top: auto;
+}
+footer p { margin: 10px 0; font-size: 1.1rem; }
+footer a { color: var(--primary-gold); text-decoration: none; }
+
+/* أنيميشنز */
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pulse { 
+    0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); } 
+    70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); } 
+    100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); } 
+}
+
+/* نجوم التقييم العالي */
+.star-anim {
+    position: fixed; color: #f1c40f; font-size: 20px;
+    animation: fall 3s linear forwards; z-index: 2000; pointer-events: none;
+}
+@keyframes fall {
+    0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+/* --- تنسيقات أزرار الأذكار والسنن (الجديدة) --- */
+.azkar-modal-content {
+    max-width: 750px; /* تكبير النافذة قليلاً لتستوعب المحتوى المريح */
+}
+
+.tabs-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+}
+
+.tab-btn {
+    flex: 1;
+    min-width: 140px;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0.6; /* شفافية للأزرار الغير مفعلة */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.tab-btn:hover {
+    transform: translateY(-3px);
+    opacity: 0.8;
+}
+
+/* الألوان الخاصة بكل زر */
+.morning-btn { background: linear-gradient(135deg, #f39c12, #e67e22); }
+.evening-btn { background: linear-gradient(135deg, #2c3e50, #34495e); }
+.ramadan-btn { background: linear-gradient(135deg, #8e44ad, #9b59b6); }
+
+/* الزر المفعل */
+.tab-btn.active-tab {
+    opacity: 1;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    border: 2px solid var(--white);
+}
+
+/* محتوى الأقسام */
+.tab-content {
+    display: none; /* إخفاء الكل افتراضياً */
+    animation: fadeIn 0.5s ease;
+    text-align: right;
+}
+
+.tab-content.active-content {
+    display: block; /* إظهار القسم المفعل */
+}
+
+.tab-header {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 2px dashed #eee;
+    padding-bottom: 10px;
+}
+
+.tab-header h3 {
+    font-size: 1.6rem;
+    margin-bottom: 5px;
+}
+
+.checklist-container {
+    max-height: 50vh; /* شريط تمرير داخلي إذا طالت القائمة */
+    overflow-y: auto;
+    padding-left: 10px;
+}
+
+/* تنسيق التشيك ليست (المهام) */
+.check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    background: #fdfbf7;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #eaeaea;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+.check-item:hover {
+    border-color: var(--primary-gold);
+    box-shadow: 0 4px 10px rgba(212, 175, 55, 0.1);
+    transform: translateX(-5px); /* حركة خفيفة لليمين عند التأشير */
+}
+
+.check-item input[type="checkbox"] {
+    margin-top: 6px;
+    width: 22px;
+    height: 22px;
+    accent-color: var(--primary-gold);
+    cursor: pointer;
+    flex-shrink: 0; /* منع المربع من الانكماش */
+}
+
+/* تصغير مساحة التمرير (Scrollbar) بشكل جميل */
+.checklist-container::-webkit-scrollbar { width: 8px; }
+.checklist-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+.checklist-container::-webkit-scrollbar-thumb { background: var(--primary-gold); border-radius: 10px; }
+
+/* Media Queries لتحسين التجاوب على الموبايل */
+@media (max-width: 768px) {
+    header { padding: 30px 15px; }
+    header h1 { font-size: 2.2rem; }
+    header p { font-size: 1rem; }
+    .container { margin: 30px auto; grid-template-columns: 1fr; }
+    .card { padding: 25px 15px; }
+    .card i { font-size: 3rem; }
+    .card h3 { font-size: 1.3rem; }
+    .modal-content { padding: 20px; max-height: 80vh; }
+    .counter-btn { width: 150px; height: 150px; font-size: 2.5rem; }
+}
+/* ============================================================
+   قسم أحكام التجويد (Tajweed Lessons) — امتداد على نفس الهوية
+   ============================================================ */
+
+/* رابط العودة للرئيسية */
+.tw-breadcrumb {
+    max-width: 1000px;
+    margin: 25px auto 0;
+    padding: 0 20px;
+}
+.tw-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--dark-gold);
+    text-decoration: none;
+    font-weight: 700;
+    background: var(--white);
+    padding: 8px 18px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border: 1px solid var(--light-gold);
+    transition: all 0.3s;
+}
+.tw-back-link:hover {
+    background: var(--light-gold);
+    transform: translateX(-4px);
+}
+
+/* شبكة كروت الدروس (صفحة الفهرس) */
+.tw-hub-intro {
+    max-width: 800px;
+    margin: 30px auto 0;
+    padding: 0 20px;
+    text-align: center;
+    color: #555;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+.tw-lessons-grid {
+    max-width: 1200px;
+    margin: 40px auto 60px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 25px;
+}
+.tw-lesson-card {
+    background: var(--white);
+    border: 2px solid transparent;
+    border-radius: 20px;
+    padding: 25px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-dark);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.8s ease both;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.tw-lesson-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary-gold);
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+}
+.tw-lesson-num {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--light-gold);
+    color: var(--dark-gold);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+}
+.tw-lesson-card:hover .tw-lesson-num {
+    background: var(--primary-gold);
+    color: var(--white);
+}
+.tw-lesson-card h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.5;
+}
+.tw-lesson-card .tw-eyebrow {
+    font-size: 0.78rem;
+    color: var(--dark-gold);
+    opacity: 0.85;
+}
+.tw-lesson-card .tw-audio-badge {
+    font-size: 0.75rem;
+    color: var(--dark-gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* حاوية محتوى الدرس */
+.tw-lesson-wrap {
+    max-width: 850px;
+    margin: 35px auto 60px;
+    padding: 0 20px;
+}
+.tw-lesson-panel {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    border: 1px solid rgba(212,175,55,0.15);
+    animation: fadeInUp 0.8s ease both;
+}
+.tw-eyebrow-tag {
+    display: inline-block;
+    background: var(--light-gold);
+    color: var(--dark-gold);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 5px 16px;
+    border-radius: 30px;
+    margin-bottom: 14px;
+}
+.tw-lesson-title {
+    color: var(--primary-gold);
+    font-size: 2rem;
+    margin-bottom: 25px;
+    border-bottom: 3px solid var(--light-gold);
+    padding-bottom: 15px;
+}
+.tw-lesson-title i { margin-left: 12px; }
+
+.tw-section-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--dark-gold);
+    margin: 25px 0 10px;
+}
+.tw-lesson-panel p {
+    font-size: 1.08rem;
+    line-height: 2;
+    margin-bottom: 12px;
+    color: var(--text-dark);
+}
+.tw-lesson-panel ul, .tw-lesson-panel ol {
+    margin: 10px 0 15px 0;
+    padding-right: 22px;
+    line-height: 1.9;
+}
+.tw-lesson-panel li { margin-bottom: 8px; font-size: 1.05rem; }
+
+/* قائمة الأمثلة (غير قرآنية) */
+.tw-examples {
+    background: #fdfbf7;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin: 15px 0 20px;
+}
+.tw-examples-label {
+    font-weight: 700;
+    color: var(--dark-gold);
+    margin-bottom: 8px;
+    display: block;
+}
+.tw-examples span.tw-example-item {
+    display: inline-block;
+    background: var(--light-gold);
+    color: var(--text-dark);
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin: 4px;
+    font-size: 1rem;
+}
+
+/* كتلة الآية القرآنية */
+.tw-quran-block {
+    background: linear-gradient(135deg, var(--light-gold), #fffdf5);
+    border: 1px solid var(--primary-gold);
+    border-radius: 18px;
+    padding: 28px 25px;
+    margin: 20px 0;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15);
+    position: relative;
+}
+.tw-quran-block::before {
+    content: '\f699';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    top: -16px;
+    right: 50%;
+    transform: translateX(50%);
+    background: var(--primary-gold);
+    color: var(--white);
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 10px rgba(212,175,55,0.4);
+}
+.tw-quran-text {
+    font-family: 'Amiri', 'Cairo', serif;
+    font-size: 1.6rem;
+    line-height: 2.3;
+    color: #6b4e00;
+    margin-top: 10px;
+}
+.tw-quran-ref {
+    display: block;
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: var(--dark-gold);
+    font-weight: 700;
+}
+
+/* مشغل الصوت المخصص */
+.tw-audio-player {
+    background: var(--white);
+    border: 1px solid var(--light-gold);
+    border-radius: 16px;
+    padding: 14px 18px;
+    margin: 15px auto 25px;
+    max-width: 520px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+.tw-audio-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.tw-audio-playpause {
+    width: 46px; height: 46px;
+    min-width: 46px;
+    border-radius: 50%;
+    background: var(--primary-gold);
+    color: var(--white);
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+    box-shadow: 0 6px 14px rgba(212,175,55,0.35);
+}
+.tw-audio-playpause:hover { transform: scale(1.08); }
+.tw-audio-progress-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.tw-audio-progress {
+    flex: 1;
+    height: 7px;
+    background: var(--light-gold);
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.tw-audio-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--primary-gold);
+    border-radius: 10px;
+    transition: width 0.1s linear;
+}
+.tw-audio-time {
+    font-size: 0.8rem;
+    color: #777;
+    min-width: 85px;
+    text-align: center;
+    white-space: nowrap;
+}
+.tw-audio-extra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed #eee;
+    flex-wrap: wrap;
+}
+.tw-audio-volume-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--dark-gold);
+}
+.tw-audio-volume {
+    width: 80px;
+    accent-color: var(--primary-gold);
+}
+.tw-audio-speed {
+    border: 1px solid var(--light-gold);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    background: var(--bg-white);
+    cursor: pointer;
+}
+.tw-audio-download {
+    color: var(--dark-gold);
+    background: var(--light-gold);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s;
+}
+.tw-audio-download:hover { background: var(--primary-gold); color: var(--white); }
+
+/* التنقل بين الدروس */
+.tw-lesson-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-top: 35px;
+    flex-wrap: wrap;
+}
+.tw-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--white);
+    border: 2px solid var(--primary-gold);
+    color: var(--primary-gold);
+    padding: 10px 22px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.3s;
+}
+.tw-nav-btn:hover { background: var(--primary-gold); color: var(--white); }
+.tw-nav-btn.tw-nav-disabled {
+    opacity: 0.35;
+    pointer-events: none;
+}
+.tw-nav-btn-back {
+    background: var(--dark-gold);
+    border-color: var(--dark-gold);
+    color: var(--white);
+}
+.tw-nav-btn-back:hover { background: var(--text-dark); border-color: var(--text-dark); }
+
+@media (max-width: 768px) {
+    .tw-lesson-panel { padding: 25px 20px; }
+    .tw-lesson-title { font-size: 1.5rem; }
+    .tw-quran-text { font-size: 1.25rem; line-height: 2.1; }
+    .tw-lesson-nav { flex-direction: column; }
+    .tw-nav-btn { width: 100%; justify-content: center; }
+    .tw-audio-time { min-width: 70px; font-size: 0.72rem; }
+    .tw-audio-volume { width: 55px; }
+}
