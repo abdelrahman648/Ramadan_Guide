@@ -158,3 +158,84 @@ function showTab(tabName) {
     document.getElementById('tab-' + tabName).classList.add('active-content');
     document.querySelector('.' + tabName + '-btn').classList.add('active-tab');
 }
+/* ============================================================
+   مشغل الصوت الخاص بدروس أحكام التجويد
+   ============================================================ */
+function initTajweedAudioPlayers() {
+    const players = document.querySelectorAll('.tw-audio-player');
+    players.forEach(function (player) {
+        const src = player.getAttribute('data-src');
+        const audio = new Audio(src);
+        audio.preload = 'metadata';
+
+        const playBtn = player.querySelector('.tw-audio-playpause');
+        const progress = player.querySelector('.tw-audio-progress');
+        const progressBar = player.querySelector('.tw-audio-progress-bar');
+        const timeLabel = player.querySelector('.tw-audio-time');
+        const volumeInput = player.querySelector('.tw-audio-volume');
+        const volumeBtn = player.querySelector('.tw-audio-volume-btn');
+        const speedSelect = player.querySelector('.tw-audio-speed');
+
+        function formatTime(sec) {
+            if (!isFinite(sec) || isNaN(sec)) return '0:00';
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60).toString().padStart(2, '0');
+            return `${m}:${s}`;
+        }
+
+        audio.addEventListener('loadedmetadata', function () {
+            timeLabel.textContent = `${formatTime(0)} / ${formatTime(audio.duration)}`;
+        });
+
+        audio.addEventListener('timeupdate', function () {
+            const pct = (audio.currentTime / audio.duration) * 100 || 0;
+            progressBar.style.width = pct + '%';
+            timeLabel.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+        });
+
+        audio.addEventListener('ended', function () {
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        });
+
+        playBtn.addEventListener('click', function () {
+            if (audio.paused) {
+                document.querySelectorAll('.tw-audio-player audio-instance').forEach(() => {});
+                audio.play();
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                audio.pause();
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        });
+
+        progress.addEventListener('click', function (e) {
+            const rect = progress.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const ratio = clickX / rect.width;
+            if (isFinite(audio.duration)) {
+                audio.currentTime = ratio * audio.duration;
+            }
+        });
+
+        if (volumeInput) {
+            volumeInput.addEventListener('input', function () {
+                audio.volume = volumeInput.value;
+                if (volumeBtn) {
+                    volumeBtn.innerHTML = audio.volume == 0
+                        ? '<i class="fas fa-volume-mute"></i>'
+                        : '<i class="fas fa-volume-up"></i>';
+                }
+            });
+        }
+
+        if (speedSelect) {
+            speedSelect.addEventListener('change', function () {
+                audio.playbackRate = parseFloat(speedSelect.value);
+            });
+        }
+    });
+}
+
+if (document.querySelector('.tw-audio-player')) {
+    document.addEventListener('DOMContentLoaded', initTajweedAudioPlayers);
+}

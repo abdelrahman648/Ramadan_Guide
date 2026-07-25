@@ -75,6 +75,7 @@ header p {
 .card:nth-child(2) { animation-delay: 0.2s; }
 .card:nth-child(3) { animation-delay: 0.3s; }
 .card:nth-child(4) { animation-delay: 0.4s; }
+.card:nth-child(5) { animation-delay: 0.5s; }
 
 /* --- إصلاح أنيميشن الكرت (من الأسفل للأعلى) --- */
 .card::before {
@@ -401,4 +402,368 @@ footer a { color: var(--primary-gold); text-decoration: none; }
     .card h3 { font-size: 1.3rem; }
     .modal-content { padding: 20px; max-height: 80vh; }
     .counter-btn { width: 150px; height: 150px; font-size: 2.5rem; }
+}
+/* ============================================================
+   قسم أحكام التجويد (Tajweed Lessons) — امتداد على نفس الهوية
+   ============================================================ */
+
+/* رابط العودة للرئيسية */
+.tw-breadcrumb {
+    max-width: 1000px;
+    margin: 25px auto 0;
+    padding: 0 20px;
+}
+.tw-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--dark-gold);
+    text-decoration: none;
+    font-weight: 700;
+    background: var(--white);
+    padding: 8px 18px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border: 1px solid var(--light-gold);
+    transition: all 0.3s;
+}
+.tw-back-link:hover {
+    background: var(--light-gold);
+    transform: translateX(-4px);
+}
+
+/* شبكة كروت الدروس (صفحة الفهرس) */
+.tw-hub-intro {
+    max-width: 800px;
+    margin: 30px auto 0;
+    padding: 0 20px;
+    text-align: center;
+    color: #555;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+.tw-lessons-grid {
+    max-width: 1200px;
+    margin: 40px auto 60px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 25px;
+}
+.tw-lesson-card {
+    background: var(--white);
+    border: 2px solid transparent;
+    border-radius: 20px;
+    padding: 25px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-dark);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.8s ease both;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.tw-lesson-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary-gold);
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+}
+.tw-lesson-num {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--light-gold);
+    color: var(--dark-gold);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+}
+.tw-lesson-card:hover .tw-lesson-num {
+    background: var(--primary-gold);
+    color: var(--white);
+}
+.tw-lesson-card h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.5;
+}
+.tw-lesson-card .tw-eyebrow {
+    font-size: 0.78rem;
+    color: var(--dark-gold);
+    opacity: 0.85;
+}
+.tw-lesson-card .tw-audio-badge {
+    font-size: 0.75rem;
+    color: var(--dark-gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* حاوية محتوى الدرس */
+.tw-lesson-wrap {
+    max-width: 850px;
+    margin: 35px auto 60px;
+    padding: 0 20px;
+}
+.tw-lesson-panel {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    border: 1px solid rgba(212,175,55,0.15);
+    animation: fadeInUp 0.8s ease both;
+}
+.tw-eyebrow-tag {
+    display: inline-block;
+    background: var(--light-gold);
+    color: var(--dark-gold);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 5px 16px;
+    border-radius: 30px;
+    margin-bottom: 14px;
+}
+.tw-lesson-title {
+    color: var(--primary-gold);
+    font-size: 2rem;
+    margin-bottom: 25px;
+    border-bottom: 3px solid var(--light-gold);
+    padding-bottom: 15px;
+}
+.tw-lesson-title i { margin-left: 12px; }
+
+.tw-section-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--dark-gold);
+    margin: 25px 0 10px;
+}
+.tw-lesson-panel p {
+    font-size: 1.08rem;
+    line-height: 2;
+    margin-bottom: 12px;
+    color: var(--text-dark);
+}
+.tw-lesson-panel ul, .tw-lesson-panel ol {
+    margin: 10px 0 15px 0;
+    padding-right: 22px;
+    line-height: 1.9;
+}
+.tw-lesson-panel li { margin-bottom: 8px; font-size: 1.05rem; }
+
+/* قائمة الأمثلة (غير قرآنية) */
+.tw-examples {
+    background: #fdfbf7;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin: 15px 0 20px;
+}
+.tw-examples-label {
+    font-weight: 700;
+    color: var(--dark-gold);
+    margin-bottom: 8px;
+    display: block;
+}
+.tw-examples span.tw-example-item {
+    display: inline-block;
+    background: var(--light-gold);
+    color: var(--text-dark);
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin: 4px;
+    font-size: 1rem;
+}
+
+/* كتلة الآية القرآنية */
+.tw-quran-block {
+    background: linear-gradient(135deg, var(--light-gold), #fffdf5);
+    border: 1px solid var(--primary-gold);
+    border-radius: 18px;
+    padding: 28px 25px;
+    margin: 20px 0;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15);
+    position: relative;
+}
+.tw-quran-block::before {
+    content: '\f699';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    top: -16px;
+    right: 50%;
+    transform: translateX(50%);
+    background: var(--primary-gold);
+    color: var(--white);
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 10px rgba(212,175,55,0.4);
+}
+.tw-quran-text {
+    font-family: 'Amiri', 'Cairo', serif;
+    font-size: 1.6rem;
+    line-height: 2.3;
+    color: #6b4e00;
+    margin-top: 10px;
+}
+.tw-quran-ref {
+    display: block;
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: var(--dark-gold);
+    font-weight: 700;
+}
+
+/* مشغل الصوت المخصص */
+.tw-audio-player {
+    background: var(--white);
+    border: 1px solid var(--light-gold);
+    border-radius: 16px;
+    padding: 14px 18px;
+    margin: 15px auto 25px;
+    max-width: 520px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+.tw-audio-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.tw-audio-playpause {
+    width: 46px; height: 46px;
+    min-width: 46px;
+    border-radius: 50%;
+    background: var(--primary-gold);
+    color: var(--white);
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+    box-shadow: 0 6px 14px rgba(212,175,55,0.35);
+}
+.tw-audio-playpause:hover { transform: scale(1.08); }
+.tw-audio-progress-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.tw-audio-progress {
+    flex: 1;
+    height: 7px;
+    background: var(--light-gold);
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.tw-audio-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--primary-gold);
+    border-radius: 10px;
+    transition: width 0.1s linear;
+}
+.tw-audio-time {
+    font-size: 0.8rem;
+    color: #777;
+    min-width: 85px;
+    text-align: center;
+    white-space: nowrap;
+}
+.tw-audio-extra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed #eee;
+    flex-wrap: wrap;
+}
+.tw-audio-volume-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--dark-gold);
+}
+.tw-audio-volume {
+    width: 80px;
+    accent-color: var(--primary-gold);
+}
+.tw-audio-speed {
+    border: 1px solid var(--light-gold);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    background: var(--bg-white);
+    cursor: pointer;
+}
+.tw-audio-download {
+    color: var(--dark-gold);
+    background: var(--light-gold);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s;
+}
+.tw-audio-download:hover { background: var(--primary-gold); color: var(--white); }
+
+/* التنقل بين الدروس */
+.tw-lesson-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-top: 35px;
+    flex-wrap: wrap;
+}
+.tw-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--white);
+    border: 2px solid var(--primary-gold);
+    color: var(--primary-gold);
+    padding: 10px 22px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.3s;
+}
+.tw-nav-btn:hover { background: var(--primary-gold); color: var(--white); }
+.tw-nav-btn.tw-nav-disabled {
+    opacity: 0.35;
+    pointer-events: none;
+}
+.tw-nav-btn-back {
+    background: var(--dark-gold);
+    border-color: var(--dark-gold);
+    color: var(--white);
+}
+.tw-nav-btn-back:hover { background: var(--text-dark); border-color: var(--text-dark); }
+
+@media (max-width: 768px) {
+    .tw-lesson-panel { padding: 25px 20px; }
+    .tw-lesson-title { font-size: 1.5rem; }
+    .tw-quran-text { font-size: 1.25rem; line-height: 2.1; }
+    .tw-lesson-nav { flex-direction: column; }
+    .tw-nav-btn { width: 100%; justify-content: center; }
+    .tw-audio-time { min-width: 70px; font-size: 0.72rem; }
+    .tw-audio-volume { width: 55px; }
 }
